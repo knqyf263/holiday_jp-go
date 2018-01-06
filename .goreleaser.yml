@@ -1,0 +1,32 @@
+release:
+  github:
+    owner: knqyf263
+    name: holiday_jp-go
+  name_template: '{{.Tag}}'
+builds:
+- goos:
+  - linux
+  - darwin
+  - windows
+  goarch:
+  - amd64
+  - "386"
+  goarm:
+  - "6"
+  main: .
+  ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+archive:
+  format: zip
+  name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{
+    .Arm }}{{ end }}'
+  files:
+  - LICENSE*
+  - README*
+  - CHANGELOG*
+fpm:
+  bindir: /usr/local/bin
+  formats:
+  - deb
+  - rpm
+checksum:
+  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
